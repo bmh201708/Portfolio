@@ -141,8 +141,8 @@ const HomeView = ({ onNavigate }) => {
                     </div>
 
                     {/* 右侧：简介与导航 */}
-                    <div className="md:col-span-4 flex flex-col justify-end h-full md:pl-12 relative animate-fade-in" style={{ animationDelay: '0.8s' }}>
-                        <div className="hidden md:block absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-stone-300 to-transparent"></div>
+                    <div className="md:col-span-4 flex flex-col justify-end h-full md:pl-0 md:-ml-6 relative animate-fade-in" style={{ animationDelay: '0.8s' }}>
+                        <div className="hidden md:block absolute -left-6 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-stone-300 to-transparent"></div>
 
                         <div className="space-y-8 backdrop-blur-sm md:backdrop-blur-none p-4 md:p-0 rounded-xl md:rounded-none">
                             <p className="font-serif italic text-2xl md:text-3xl text-stone-400">
@@ -151,7 +151,7 @@ const HomeView = ({ onNavigate }) => {
 
                             <div className="space-y-6">
                                 <p className="text-stone-600 font-sans text-sm md:text-base leading-relaxed text-justify max-w-sm">
-                                    你好，我是 <strong className="text-stone-900 font-serif text-lg mx-1">Alex</strong>。
+                                    你好，我是 <strong className="text-stone-900 font-serif text-lg mx-1">Yike Jin</strong>。
                                     <br className="mb-2" />
                                     一名游走于代码与艺术之间的数字工匠。<br />
                                     致力于剥离繁杂，创造具有情感共鸣的 <span className="italic font-serif text-stone-800 border-b border-stone-300">极简数字体验</span>。
@@ -372,7 +372,7 @@ const AboutView = () => (
             <div className="md:col-span-5 relative">
                 <div className="w-full aspect-[3/4] overflow-hidden grayscale contrast-125 relative z-10">
                     <img
-                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=800"
+                        src="./public/image/me.jpg"
                         alt="Portrait"
                         className="w-full h-full object-cover"
                     />
@@ -382,15 +382,15 @@ const AboutView = () => (
                 <div className="mt-8 space-y-6 font-mono text-xs uppercase tracking-widest text-stone-500">
                     <div className="flex justify-between border-b border-stone-200 pb-2">
                         <span className="text-stone-900">Location</span>
-                        <span>Shanghai, CN</span>
+                        <span>Hangzhou, ZJ, CN</span>
                     </div>
                     <div className="flex justify-between border-b border-stone-200 pb-2">
-                        <span className="text-stone-900">Experience</span>
-                        <span>5 Years</span>
+                        <span className="text-stone-900">Education</span>
+                        <span>Zhejiang University</span>
                     </div>
                     <div className="flex justify-between border-b border-stone-200 pb-2">
                         <span className="text-stone-900">Focus</span>
-                        <span>Art Direction</span>
+                        <span>Design & Computer Science</span>
                     </div>
                 </div>
             </div>
@@ -411,12 +411,12 @@ const AboutView = () => (
                 </div>
 
                 <div className="pt-12">
-                    <h3 className="font-serif text-2xl italic mb-6 text-stone-900">Services</h3>
+                    <h3 className="font-serif text-2xl italic mb-6 text-stone-900">Skills</h3>
                     <ul className="space-y-4 text-stone-600 font-light">
-                        {['Creative Direction', 'UI/UX Design', 'Frontend Development', 'Brand Identity'].map(service => (
-                            <li key={service} className="flex items-center gap-4 group cursor-hover">
+                        {['Interactive Design', 'UI/UX Design', 'Development & Programming', 'Deep Learning & LLMs'].map(skill => (
+                            <li key={skill} className="flex items-center gap-4 group cursor-hover">
                                 <span className="w-2 h-2 rounded-full bg-stone-300 group-hover:bg-stone-900 transition-colors"></span>
-                                {service}
+                                {skill}
                             </li>
                         ))}
                     </ul>
@@ -433,17 +433,17 @@ const ContactView = () => (
                 Connect
             </h1>
 
-            <div className="relative z-10 max-w-3xl ml-auto mr-auto text-center">
+            <div className="relative z-10 max-w-5xl ml-auto mr-auto text-center">
                 <p className="text-xl md:text-2xl font-light text-stone-500 mb-16">
                     有一个有趣的想法？或者只是想聊聊？
                 </p>
 
                 <a
-                    href="mailto:hello@example.com"
+                    href="mailto:jin-yike@zju.edu.cn"
                     className="cursor-hover group relative inline-block"
                 >
                     <span className="text-6xl md:text-8xl font-serif text-stone-900 tracking-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-stone-800 group-hover:to-stone-500 transition-all duration-500">
-                        hello@alex.design
+                        jin-yike@zju.edu.cn
                     </span>
                     <span className="absolute -bottom-4 left-0 w-full h-[2px] bg-stone-900 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></span>
                 </a>
@@ -594,7 +594,7 @@ const Portfolio = () => {
 
             {/* 固定页脚 */}
             <footer className="fixed bottom-8 left-8 md:left-16 text-[10px] font-mono text-stone-400 uppercase tracking-widest hidden md:block mix-blend-multiply">
-                © 2024 Alex Portfolio.
+                © 2025 Jin Yike Portfolio.
             </footer>
 
             {/* 社交链接 */}
