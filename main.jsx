@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ArrowRight, Mail, Instagram, Twitter, Github, Menu, X, ArrowUpRight, ArrowDown, ExternalLink } from 'lucide-react';
+import ProjectDetail from './ProjectDetail.jsx';
 
 // --- 静态数据和子组件移至外部，防止重复定义 ---
 
@@ -54,35 +55,20 @@ const projects = [
 const publications = [
     {
         id: 1,
-        title: "Emotive Interfaces: Quantifying User Sentiment in Minimalist Web Design",
-        conference: "CHI 2024",
-        year: "2024",
+        title: "MethodMate: Supporting Novice HCI Researchers in Designing Quantitative Research Proposals with LLMs",
+        conference: "Under Review",
+        year: "2025",
         link: "#",
-        tags: ["HCI", "Minimalism"]
-    },
-    {
-        id: 2,
-        title: "Generative Typography: A Framework for Fluid Readability on Mobile Devices",
-        conference: "UIST 2023",
-        year: "2023",
-        link: "#",
-        tags: ["Typography", "Frontend"]
-    },
-    {
-        id: 3,
-        title: "The Sound of Silence: Negative Space as a Narrative Tool in Digital Storytelling",
-        conference: "DIS 2022",
-        year: "2022",
-        link: "#",
-        tags: ["Design Theory", "Narrative"]
+        tags: ["HCI", "LLMs"],
+        Author: "Qi, Liu, Yike Jin , et al."
     }
 ];
 
 const researchInterests = [
     "Human-Computer Interaction (HCI)",
-    "Generative Design",
-    "Digital Aesthetics",
-    "Cognitive Load Theory"
+    "Machine Learning",
+    "Large Language Models(LLMs)",
+    "Agent Self-evolution"
 ];
 
 // 页面切换动画容器
@@ -246,7 +232,7 @@ const HomeView = ({ onNavigate }) => {
     );
 };
 
-const WorkView = () => (
+const WorkView = ({ onProjectClick }) => (
     <PageTransition className="pt-32 pb-20">
         <div className="mb-24 flex items-end justify-between border-b border-stone-200 pb-6">
             <h2 className="text-5xl md:text-7xl font-serif text-stone-900">Works</h2>
@@ -257,6 +243,7 @@ const WorkView = () => (
             {projects.map((project, index) => (
                 <div
                     key={project.id}
+                    onClick={() => onProjectClick(project)}
                     className={`group cursor-pointer cursor-hover ${project.className}`}
                 >
                     <div className="overflow-hidden relative mb-6 shadow-xl shadow-stone-200/50 aspect-[3/4]">
@@ -350,7 +337,7 @@ const ResearchView = () => (
                             <div className="flex items-center gap-4 text-sm text-stone-500 mb-4">
                                 <span className="font-semibold text-stone-700">{pub.conference}</span>
                                 <span className="w-1 h-1 bg-stone-300 rounded-full"></span>
-                                <span>Author, A., Collaborator, B.</span>
+                                <span>Author, Qi Liu., Collaborator, Yike Jin.</span>
                             </div>
 
                             <div className="flex gap-2">
@@ -477,6 +464,7 @@ const ContactView = () => (
 const Portfolio = () => {
     const [activeTab, setActiveTab] = useState('home');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [selectedProject, setSelectedProject] = useState(null);
     const [scrolled, setScrolled] = useState(false);
 
     const cursorDotRef = useRef(null);
@@ -588,11 +576,20 @@ const Portfolio = () => {
             {/* 主要内容区域 */}
             <main className="px-6 md:px-16 md:ml-24 md:mr-24 min-h-screen relative">
                 <div className="max-w-7xl mx-auto">
-                    {activeTab === 'home' && <HomeView onNavigate={setActiveTab} />}
-                    {activeTab === 'work' && <WorkView />}
-                    {activeTab === 'research' && <ResearchView />}
-                    {activeTab === 'about' && <AboutView />}
-                    {activeTab === 'contact' && <ContactView />}
+                    {selectedProject ? (
+                        <ProjectDetail
+                            project={selectedProject}
+                            onBack={() => setSelectedProject(null)}
+                        />
+                    ) : (
+                        <>
+                            {activeTab === 'home' && <HomeView onNavigate={setActiveTab} />}
+                            {activeTab === 'work' && <WorkView onProjectClick={setSelectedProject} />}
+                            {activeTab === 'research' && <ResearchView />}
+                            {activeTab === 'about' && <AboutView />}
+                            {activeTab === 'contact' && <ContactView />}
+                        </>
+                    )}
                 </div>
             </main>
 
