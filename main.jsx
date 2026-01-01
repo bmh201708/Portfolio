@@ -104,6 +104,14 @@ const projectExperiences = [
         period: "2025.3 - 2025.12",
         description: "Using LLMs to generate music based on the emotion of the music.",
         tags: ["LLMs", "Music", "Emotion Recognition", "Transformer"]
+    },
+    {
+        id: 4,
+        title: "Internship in Hangzhou NetEase Leihuo Technology Co., Ltd.",
+        role: "UX Designer",
+        period: "2025.7 - 2025.9",
+        description: "Design and Developing a game",
+        tags: ["UX", "Game", "Design", "Developing"]
     }
 ];
 
@@ -432,7 +440,7 @@ const AboutView = () => (
     <PageTransition className="pt-32 pb-20 max-w-5xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-16">
             <div className="md:col-span-5 relative">
-                <div className="w-full aspect-[3/4] overflow-hidden grayscale contrast-125 relative z-10">
+                <div className="w-full aspect-[3/4] overflow-hidden relative z-10">
                     <img
                         src="/image/me.jpg"
                         alt="Portrait"
@@ -461,13 +469,13 @@ const AboutView = () => (
 
             <div className="md:col-span-7 flex flex-col justify-center space-y-12">
                 <h2 className="text-4xl md:text-5xl font-serif leading-tight text-stone-900">
-                    我不只是在构建网页，<br />
+                    我不只是在写代码，<br />
                     我在构建 <span className="italic text-stone-400 font-light">数字景观</span>。
                 </h2>
 
                 <div className="space-y-8 text-stone-600 leading-loose text-lg font-light">
                     <p>
-                        作为一名独立创意开发者，我相信技术的终极目标是隐形的。好的设计不应该被感知为“设计”，而应该被感知为一种自然的流动。
+                        作为一名创意开发者与设计师，我相信技术的终极目标是隐形的。好的设计不应该被感知为“设计”，而应该被感知为一种自然的流动。
                     </p>
                     <p>
                         深受包豪斯极简主义和日本侘寂美学（Wabi-sabi）的影响，我的作品倾向于剥离多余的装饰，保留事物的核心本质。我喜欢在完美的像素网格中寻找有机的秩序。
@@ -602,7 +610,7 @@ const Portfolio = () => {
                     className="cursor-hover text-2xl font-serif font-bold tracking-tighter cursor-pointer relative z-50 mix-blend-difference text-stone-900"
                     onClick={() => setActiveTab('home')}
                 >
-                    A.
+                    Y.K.
                 </div>
 
                 {/* 桌面端菜单 */}
