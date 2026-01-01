@@ -61,6 +61,14 @@ const publications = [
         link: "#",
         tags: ["HCI", "LLMs"],
         Author: "Qi, Liu, Yike Jin , et al."
+    },
+    {
+        id: 2,
+        title: "Evolving Personalized GUI Agent with Privacy-preserving GUI Hub",
+        conference: "Writing",
+        year: "2026",
+        link: "#",
+        tags: ["ML", "LLMs", "Agent"]
     }
 ];
 
@@ -69,6 +77,34 @@ const researchInterests = [
     "Machine Learning",
     "Large Language Models(LLMs)",
     "Agent Self-evolution"
+];
+
+// 项目经验数据
+const projectExperiences = [
+    {
+        id: 1,
+        title: "Intern in International Design Institute of Zhejiang University",
+        role: "Intern",
+        period: "2025.5 - 2025.12",
+        description: "Developed an intelligent system to assist novice HCI researchers in designing quantitative research proposals using Large Language Models.",
+        tags: ["React", "Python", "LLMs", "HCI"]
+    },
+    {
+        id: 2,
+        title: "Research on Agent Self-evolution and Loras",
+        role: "Intern",
+        period: "2025.12 - Present",
+        description: "Related to Agent self-evolution",
+        tags: ["Agent", "ML", "Privacy", "GUI"]
+    },
+    {
+        id: 3,
+        title: "SRTP Project: Research on Multimodal Data-Driven Models for Music Emotion Recognition and Generation ",
+        role: "Project Leader",
+        period: "2025.3 - 2025.12",
+        description: "Using LLMs to generate music based on the emotion of the music.",
+        tags: ["LLMs", "Music", "Emotion Recognition", "Transformer"]
+    }
 ];
 
 // 页面切换动画容器
@@ -337,7 +373,7 @@ const ResearchView = () => (
                             <div className="flex items-center gap-4 text-sm text-stone-500 mb-4">
                                 <span className="font-semibold text-stone-700">{pub.conference}</span>
                                 <span className="w-1 h-1 bg-stone-300 rounded-full"></span>
-                                <span>Author, Qi Liu., Collaborator, Yike Jin.</span>
+                                <span>Author: {pub.Author}.</span>
                             </div>
 
                             <div className="flex gap-2">
@@ -349,6 +385,43 @@ const ResearchView = () => (
                             </div>
                         </div>
                     ))}
+                </div>
+
+                {/* 项目经验 */}
+                <div className="mt-24">
+                    <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 mb-8 border-b border-stone-200 pb-2">
+                        Project Experience
+                    </h3>
+
+                    <div className="space-y-12">
+                        {projectExperiences.map((project) => (
+                            <div key={project.id} className="group cursor-hover">
+                                <div className="flex justify-between items-start mb-2">
+                                    <span className="font-mono text-xs text-stone-400 pt-1">{project.period}</span>
+                                </div>
+
+                                <h4 className="text-2xl font-serif text-stone-800 leading-tight mb-3 group-hover:text-stone-500 transition-colors">
+                                    {project.title}
+                                </h4>
+
+                                <div className="flex items-center gap-4 text-sm text-stone-500 mb-4">
+                                    <span className="font-semibold text-stone-700">{project.role}</span>
+                                </div>
+
+                                <p className="text-sm text-stone-600 leading-relaxed mb-4">
+                                    {project.description}
+                                </p>
+
+                                <div className="flex gap-2">
+                                    {project.tags.map(tag => (
+                                        <span key={tag} className="text-[10px] uppercase tracking-wider border border-stone-200 px-2 py-1 rounded text-stone-400">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
