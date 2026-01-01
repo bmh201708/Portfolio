@@ -94,135 +94,157 @@ const PageTransition = ({ children, className = "" }) => (
 
 // --- 独立的视图组件 ---
 
-const HomeView = ({ onNavigate }) => (
-    <PageTransition className="w-full">
-        {/* 1. Hero Section (首屏) */}
-        <div className="min-h-screen flex items-center justify-center pt-20 pb-10 relative overflow-hidden">
-            <div className="w-full max-w-[90vw] grid grid-cols-1 md:grid-cols-12 gap-12 items-center z-10">
+const HomeView = ({ onNavigate }) => {
+    // 提取标题块组件，便于复用以实现双色叠加效果
+    const TitleBlock = ({ className = "", colorClass, style = {} }) => (
+        <div className={`flex flex-col justify-center ${className}`} style={style}>
+            <div className="overflow-hidden">
+                <h1 className={`text-[13vw] md:text-[10vw] font-serif font-light tracking-tighter leading-[0.85] ${colorClass} animate-reveal-up origin-bottom`}>
+                    DESIGN
+                </h1>
+            </div>
+            <div className="overflow-hidden pl-[4vw] md:pl-[8vw]">
+                <h1 className={`text-[13vw] md:text-[10vw] font-serif italic font-light tracking-tighter leading-[0.85] ${colorClass} animate-reveal-up origin-bottom`} style={{ animationDelay: '0.15s' }}>
+                    IS
+                </h1>
+            </div>
+            <div className="overflow-hidden">
+                <h1 className={`text-[13vw] md:text-[10vw] font-serif font-medium tracking-tighter leading-[0.85] ${colorClass} animate-reveal-up origin-bottom`} style={{ animationDelay: '0.3s' }}>
+                    SILENCE
+                </h1>
+            </div>
+        </div>
+    );
 
-                {/* 左侧：艺术排版标题 */}
-                <div className="md:col-span-8 flex flex-col justify-center select-none mix-blend-darken">
-                    <div className="overflow-hidden">
-                        <h1 className="text-[13vw] md:text-[10vw] font-serif font-light tracking-tighter leading-[0.85] text-stone-900 animate-reveal-up origin-bottom">
-                            DESIGN
-                        </h1>
+    return (
+        <PageTransition className="w-full">
+            {/* 1. Hero Section (首屏) */}
+            <div className="min-h-screen flex items-center justify-center pt-20 pb-10 relative overflow-hidden">
+                <div className="w-full max-w-[90vw] grid grid-cols-1 md:grid-cols-12 gap-12 items-center z-10">
+
+                    {/* 左侧：艺术排版标题 - 隐形分割线双色效果 */}
+                    <div className="md:col-span-8 relative select-none">
+
+                        {/* 占位符：用于撑开父容器高度，不可见 */}
+                        <TitleBlock className="opacity-0 pointer-events-none" colorClass="text-stone-900" />
+
+                        {/* 左半部分：深色 (只显示 0% 到 38% 的区域) */}
+                        <div className="absolute inset-0 z-10" style={{ clipPath: 'polygon(0 0, 38% 0, 38% 100%, 0 100%)' }}>
+                            <TitleBlock colorClass="text-stone-900" />
+                        </div>
+
+                        {/* 右半部分：浅色 (只显示 38% 到 100% 的区域) */}
+                        {/* 修改颜色为 text-stone-300 以增强对比度 */}
+                        <div className="absolute inset-0 z-10" style={{ clipPath: 'polygon(38% 0, 100% 0, 100% 100%, 38% 100%)' }}>
+                            <TitleBlock colorClass="text-stone-300" />
+                        </div>
                     </div>
-                    <div className="overflow-hidden pl-[4vw] md:pl-[8vw]">
-                        <h1 className="text-[13vw] md:text-[10vw] font-serif italic font-light tracking-tighter leading-[0.85] text-stone-800 animate-reveal-up origin-bottom" style={{ animationDelay: '0.15s' }}>
-                            IS
-                        </h1>
-                    </div>
-                    <div className="overflow-hidden">
-                        <h1 className="text-[13vw] md:text-[10vw] font-serif font-medium tracking-tighter leading-[0.85] text-stone-900 animate-reveal-up origin-bottom" style={{ animationDelay: '0.3s' }}>
-                            SILENCE
-                        </h1>
-                    </div>
-                </div>
 
-                {/* 右侧：简介与导航 */}
-                <div className="md:col-span-4 flex flex-col justify-end h-full md:pl-12 relative animate-fade-in" style={{ animationDelay: '0.8s' }}>
-                    <div className="hidden md:block absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-stone-300 to-transparent"></div>
+                    {/* 右侧：简介与导航 */}
+                    <div className="md:col-span-4 flex flex-col justify-end h-full md:pl-12 relative animate-fade-in" style={{ animationDelay: '0.8s' }}>
+                        <div className="hidden md:block absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-stone-300 to-transparent"></div>
 
-                    <div className="space-y-8 backdrop-blur-sm md:backdrop-blur-none p-4 md:p-0 rounded-xl md:rounded-none">
-                        <p className="font-serif italic text-2xl md:text-3xl text-stone-400">
-                            "Less is more."
-                        </p>
-
-                        <div className="space-y-6">
-                            <p className="text-stone-600 font-sans text-sm md:text-base leading-relaxed text-justify max-w-sm">
-                                你好，我是 <strong className="text-stone-900 font-serif text-lg mx-1">Alex</strong>。
-                                <br className="mb-2" />
-                                一名游走于代码与艺术之间的数字工匠。<br />
-                                致力于剥离繁杂，创造具有情感共鸣的 <span className="italic font-serif text-stone-800 border-b border-stone-300">极简数字体验</span>。
+                        <div className="space-y-8 backdrop-blur-sm md:backdrop-blur-none p-4 md:p-0 rounded-xl md:rounded-none">
+                            <p className="font-serif italic text-2xl md:text-3xl text-stone-400">
+                                "Less is more."
                             </p>
 
-                            <button
-                                onClick={() => onNavigate('work')}
-                                className="group cursor-hover flex items-center gap-4 text-xs font-mono uppercase tracking-[0.25em] text-stone-900 pt-4"
-                            >
-                                <span className="w-8 h-[1px] bg-stone-900 transition-all duration-500 ease-out group-hover:w-24"></span>
-                                Explore Works
-                            </button>
+                            <div className="space-y-6">
+                                <p className="text-stone-600 font-sans text-sm md:text-base leading-relaxed text-justify max-w-sm">
+                                    你好，我是 <strong className="text-stone-900 font-serif text-lg mx-1">Alex</strong>。
+                                    <br className="mb-2" />
+                                    一名游走于代码与艺术之间的数字工匠。<br />
+                                    致力于剥离繁杂，创造具有情感共鸣的 <span className="italic font-serif text-stone-800 border-b border-stone-300">极简数字体验</span>。
+                                </p>
+
+                                <button
+                                    onClick={() => onNavigate('work')}
+                                    className="group cursor-hover flex items-center gap-4 text-xs font-mono uppercase tracking-[0.25em] text-stone-900 pt-4"
+                                >
+                                    <span className="w-8 h-[1px] bg-stone-900 transition-all duration-500 ease-out group-hover:w-24"></span>
+                                    Explore Works
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                {/* 滚动提示 */}
+                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 animate-bounce-slow mix-blend-multiply">
+                    <span className="text-[10px] font-mono uppercase tracking-widest">Scroll</span>
+                    <div className="w-[1px] h-12 bg-stone-900"></div>
+                </div>
+
+                {/* 背景装饰 */}
+                <div className="absolute top-0 right-0 w-full md:w-[40vw] h-full bg-[#f2f0e9] -z-10 transform skew-x-12 translate-x-32 opacity-60"></div>
+                <div className="fixed top-1/2 left-1/4 w-[50vw] h-[50vw] bg-gradient-to-tr from-white to-transparent rounded-full blur-[100px] -z-10 animate-pulse-slow"></div>
             </div>
 
-            {/* 滚动提示 */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-40 animate-bounce-slow mix-blend-multiply">
-                <span className="text-[10px] font-mono uppercase tracking-widest">Scroll</span>
-                <div className="w-[1px] h-12 bg-stone-900"></div>
-            </div>
+            {/* 2. Philosophy Section - 布局优化：交错式布局，填充左侧 */}
+            <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-stone-200">
 
-            {/* 背景装饰 */}
-            <div className="absolute top-0 right-0 w-full md:w-[40vw] h-full bg-[#f2f0e9] -z-10 transform skew-x-12 translate-x-32 opacity-60"></div>
-            <div className="fixed top-1/2 left-1/4 w-[50vw] h-[50vw] bg-gradient-to-tr from-white to-transparent rounded-full blur-[100px] -z-10 animate-pulse-slow"></div>
-        </div>
+                {/* Row 1: 左侧标题，右侧内容 */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-32">
+                    <div className="md:sticky md:top-32">
+                        <h2 className="text-4xl md:text-6xl font-serif leading-tight text-stone-900">
+                            The art of <br />
+                            <span className="italic text-stone-400">subtraction</span>.
+                        </h2>
+                        <div className="mt-8 w-16 h-16 rounded-full border border-stone-300 flex items-center justify-center animate-spin-slow opacity-50">
+                            <ArrowDown className="w-6 h-6 text-stone-400" />
+                        </div>
+                    </div>
 
-        {/* 2. Philosophy Section - 布局优化：交错式布局，填充左侧 */}
-        <section className="py-32 px-6 md:px-12 max-w-7xl mx-auto border-t border-stone-200">
-
-            {/* Row 1: 左侧标题，右侧内容 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-start mb-32">
-                <div className="md:sticky md:top-32">
-                    <h2 className="text-4xl md:text-6xl font-serif leading-tight text-stone-900">
-                        The art of <br />
-                        <span className="italic text-stone-400">subtraction</span>.
-                    </h2>
-                    <div className="mt-8 w-16 h-16 rounded-full border border-stone-300 flex items-center justify-center animate-spin-slow opacity-50">
-                        <ArrowDown className="w-6 h-6 text-stone-400" />
+                    <div className="space-y-12 group cursor-hover pt-4">
+                        <p className="text-xl md:text-2xl font-light text-stone-600 leading-relaxed">
+                            在嘈杂的数字时代，沉默是一种奢侈。我们不仅是在设计界面，更是在设计“留白”。
+                        </p>
+                        <p className="text-stone-500 leading-relaxed">
+                            每一个像素的省略，都是为了让核心信息更清晰地呼吸。我不追求繁复的装饰，而是追求结构本身的韵律感。
+                        </p>
+                        <div className="w-full aspect-[16/9] overflow-hidden relative grayscale group-hover:grayscale-0 transition-all duration-700 ease-out mt-8">
+                            <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=1000" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" alt="Minimalism" />
+                        </div>
                     </div>
                 </div>
 
-                <div className="space-y-12 group cursor-hover pt-4">
-                    <p className="text-xl md:text-2xl font-light text-stone-600 leading-relaxed">
-                        在嘈杂的数字时代，沉默是一种奢侈。我们不仅是在设计界面，更是在设计“留白”。
-                    </p>
-                    <p className="text-stone-500 leading-relaxed">
-                        每一个像素的省略，都是为了让核心信息更清晰地呼吸。我不追求繁复的装饰，而是追求结构本身的韵律感。
-                    </p>
-                    <div className="w-full aspect-[16/9] overflow-hidden relative grayscale group-hover:grayscale-0 transition-all duration-700 ease-out mt-8">
-                        <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=1000" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" alt="Minimalism" />
+                {/* Row 2: 布局反转 - 左侧文字，右侧视觉元素 */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                    <div className="space-y-6 group cursor-hover order-2 md:order-1">
+                        <h3 className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 border-l-2 border-stone-900 pl-4">The Process</h3>
+                        <p className="text-3xl md:text-4xl font-serif text-stone-800 leading-tight">
+                            构建情感的容器
+                        </p>
+                        <p className="text-stone-500 leading-relaxed text-lg font-light">
+                            真实的连接发生在我们放下装饰、直面本质的时刻。通过代码与设计的共生，我们构建的不仅仅是工具。
+                        </p>
+                        <p className="text-stone-500 leading-relaxed">
+                            从交互的微反馈到字体的微调，每一处细节都在讲述故事。设计不仅仅是所见，更是所感。
+                        </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4 order-1 md:order-2">
+                        <div className="aspect-[3/4] bg-stone-200 overflow-hidden transform translate-y-8">
+                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 1" />
+                        </div>
+                        <div className="aspect-[3/4] bg-stone-300 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1507643179173-442f01fc12a9?auto=format&fit=crop&q=80&w=600" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 2" />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            {/* Row 2: 布局反转 - 左侧文字，右侧视觉元素 */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-                <div className="space-y-6 group cursor-hover order-2 md:order-1">
-                    <h3 className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 border-l-2 border-stone-900 pl-4">The Process</h3>
-                    <p className="text-3xl md:text-4xl font-serif text-stone-800 leading-tight">
-                        构建情感的容器
-                    </p>
-                    <p className="text-stone-500 leading-relaxed text-lg font-light">
-                        真实的连接发生在我们放下装饰、直面本质的时刻。通过代码与设计的共生，我们构建的不仅仅是工具。
-                    </p>
-                    <p className="text-stone-500 leading-relaxed">
-                        从交互的微反馈到字体的微调，每一处细节都在讲述故事。设计不仅仅是所见，更是所感。
-                    </p>
+            {/* 3. Marquee Section (流动文字) */}
+            <section className="py-24 border-t border-stone-200 overflow-hidden bg-stone-100/50">
+                <div className="whitespace-nowrap flex gap-8 animate-marquee select-none pointer-events-none">
+                    {Array(8).fill("MINIMALISM • STRUCTURE • EMOTION • ").map((text, i) => (
+                        <span key={i} className="text-6xl md:text-9xl font-serif text-transparent stroke-text">{text}</span>
+                    ))}
                 </div>
-
-                <div className="grid grid-cols-2 gap-4 order-1 md:order-2">
-                    <div className="aspect-[3/4] bg-stone-200 overflow-hidden transform translate-y-8">
-                        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 1" />
-                    </div>
-                    <div className="aspect-[3/4] bg-stone-300 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1507643179173-442f01fc12a9?auto=format&fit=crop&q=80&w=600" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 2" />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        {/* 3. Marquee Section (流动文字) */}
-        <section className="py-24 border-t border-stone-200 overflow-hidden bg-stone-100/50">
-            <div className="whitespace-nowrap flex gap-8 animate-marquee select-none pointer-events-none">
-                {Array(8).fill("MINIMALISM • STRUCTURE • EMOTION • ").map((text, i) => (
-                    <span key={i} className="text-6xl md:text-9xl font-serif text-transparent stroke-text">{text}</span>
-                ))}
-            </div>
-        </section>
-    </PageTransition>
-);
+            </section>
+        </PageTransition>
+    );
+};
 
 const WorkView = () => (
     <PageTransition className="pt-32 pb-20">
