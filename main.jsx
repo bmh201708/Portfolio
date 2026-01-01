@@ -322,7 +322,7 @@ const ResearchView = () => (
         <div className="mb-24">
             <h2 className="text-5xl md:text-7xl font-serif text-stone-900 mb-6">Research</h2>
             <p className="text-xl md:text-2xl font-light text-stone-500 max-w-2xl leading-relaxed">
-                探索人机交互与极简美学的交汇点。我的研究致力于通过认知心理学原理优化数字体验。
+                游走于科技与艺术的边缘，我的研究涵盖计算机科学、人机交互与极简美学。
             </p>
         </div>
 
