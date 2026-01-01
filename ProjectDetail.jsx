@@ -132,25 +132,26 @@ const ProjectDetail = ({ project, onBack }) => {
                         </div>
                     </div>
 
-                    {/* 可以添加更多图片展示 */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="aspect-[4/3] bg-stone-100 rounded overflow-hidden">
-                            <img
-                                src={project.image}
-                                alt={`${project.title} detail 1`}
-                                loading="lazy"
-                                className="w-full h-full object-cover opacity-50"
-                            />
+                    {/* 图片画廊 - 显示所有作品图片 */}
+                    {project.galleryImages && project.galleryImages.length > 1 && (
+                        <div>
+                            <h2 className="text-3xl font-serif text-stone-900 mb-6">Project Gallery</h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {project.galleryImages.slice(1).map((imagePath, idx) => (
+                                    <div key={idx} className="aspect-[4/3] overflow-hidden relative group cursor-pointer">
+                                        <img
+                                            src={imagePath}
+                                            alt={`${project.title} - Image ${idx + 2}`}
+                                            loading="lazy"
+                                            decoding="async"
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/5 transition-colors duration-500"></div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
-                        <div className="aspect-[4/3] bg-stone-100 rounded overflow-hidden">
-                            <img
-                                src={project.image}
-                                alt={`${project.title} detail 2`}
-                                loading="lazy"
-                                className="w-full h-full object-cover opacity-50"
-                            />
-                        </div>
-                    </div>
+                    )}
 
                     <div>
                         <h2 className="text-3xl font-serif text-stone-900 mb-6">Design Process</h2>
