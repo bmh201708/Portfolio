@@ -14,38 +14,38 @@ const navItems = [
 const projects = [
     {
         id: 1,
-        title: "虚空画廊",
-        category: "UI/UX 设计",
+        title: "MoArt Essence",
+        category: "UI/UX Design",
         year: "2024",
-        description: "探索数字空间中的负空间美学，为一家现代艺术馆设计的沉浸式网页体验。",
-        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&q=80&w=1000",
+        description: "艺术与科技的融合，为现代艺术体验打造的数字平台。",
+        image: "/portfolio/MoArt Essence/cover.jpg",
         className: "col-span-1"
     },
     {
         id: 2,
-        title: "城市回声",
-        category: "摄影集",
-        year: "2023",
-        description: "记录东京深夜的街头光影，捕捉城市沉睡时的呼吸声。",
-        image: "https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&q=80&w=1000",
+        title: "The Unbound Journey",
+        category: "Interactive Design",
+        year: "2024",
+        description: "探索无界旅程，创造沉浸式的用户体验和叙事设计。",
+        image: "/portfolio/The Unbound Journey/main.jpg",
         className: "col-span-1 md:mt-32"
     },
     {
         id: 3,
-        title: "流体排版",
-        category: "前端开发",
+        title: "Braille Bloom",
+        category: "Accessibility Design",
         year: "2023",
-        description: "基于 React 的自适应排版引擎，让文字像水一样在不同设备上流动。",
-        image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=1000",
+        description: "为视障人士设计的盲文学习系统，让无障碍设计绽放光彩。",
+        image: "/portfolio/Braille Bloom/cover.png",
         className: "col-span-1"
     },
     {
         id: 4,
-        title: "静默",
-        category: "品牌识别",
-        year: "2022",
-        description: "为极简主义家具品牌打造的视觉识别系统。",
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&q=80&w=1000",
+        title: "Methodmate",
+        category: "Research & Development",
+        year: "2023",
+        description: "研究方法论的数字化工具，助力学术研究的系统化管理。",
+        image: "/portfolio/Methodmate/cover.png",
         className: "col-span-1 md:mt-32"
     }
 ];
@@ -203,7 +203,7 @@ const HomeView = ({ onNavigate }) => {
                             每一个像素的省略，都是为了让核心信息更清晰地呼吸。我不追求繁复的装饰，而是追求结构本身的韵律感。
                         </p>
                         <div className="w-full aspect-[16/9] overflow-hidden relative grayscale group-hover:grayscale-0 transition-all duration-700 ease-out mt-8">
-                            <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=1000" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" alt="Minimalism" />
+                            <img src="https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?auto=format&fit=crop&q=80&w=1000" loading="lazy" decoding="async" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000" alt="Minimalism" />
                         </div>
                     </div>
                 </div>
@@ -225,10 +225,10 @@ const HomeView = ({ onNavigate }) => {
 
                     <div className="grid grid-cols-2 gap-4 order-1 md:order-2">
                         <div className="aspect-[3/4] bg-stone-200 overflow-hidden transform translate-y-8">
-                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 1" />
+                            <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600" loading="lazy" decoding="async" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 1" />
                         </div>
                         <div className="aspect-[3/4] bg-stone-300 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1507643179173-442f01fc12a9?auto=format&fit=crop&q=80&w=600" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 2" />
+                            <img src="https://images.unsplash.com/photo-1507643179173-442f01fc12a9?auto=format&fit=crop&q=80&w=600" loading="lazy" decoding="async" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 2" />
                         </div>
                     </div>
                 </div>
@@ -263,6 +263,8 @@ const WorkView = () => (
                         <img
                             src={project.image}
                             alt={project.title}
+                            loading="lazy"
+                            decoding="async"
                             className="w-full h-full object-cover transition-transform duration-[1.5s] ease-in-out group-hover:scale-110 group-hover:grayscale-0 grayscale"
                         />
 
@@ -372,8 +374,10 @@ const AboutView = () => (
             <div className="md:col-span-5 relative">
                 <div className="w-full aspect-[3/4] overflow-hidden grayscale contrast-125 relative z-10">
                     <img
-                        src="./public/image/me.jpg"
+                        src="/image/me.jpg"
                         alt="Portrait"
+                        loading="lazy"
+                        decoding="async"
                         className="w-full h-full object-cover"
                     />
                 </div>
