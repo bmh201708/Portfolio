@@ -452,8 +452,8 @@ const ContactView = () => (
                     {[
                         { icon: Instagram, label: "Instagram", link: "#" },
                         { icon: Twitter, label: "Twitter", link: "#" },
-                        { icon: Github, label: "Github", link: "#" },
-                        { icon: Mail, label: "Email", link: "#" },
+                        { icon: Github, label: "Github", link: "https://github.com/bmh201708" },
+                        { icon: Mail, label: "Email", link: "mailto:jin-yike@zju.edu.cn" },
                     ].map((item, idx) => (
                         <a key={idx} href={item.link} className="cursor-hover flex flex-col items-center gap-3 group">
                             <div className="p-4 rounded-full border border-stone-200 group-hover:border-stone-900 group-hover:bg-stone-900 transition-all duration-300">
