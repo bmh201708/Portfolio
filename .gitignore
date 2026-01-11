@@ -5,6 +5,11 @@ node_modules/
 dist/
 build/
 
+# Large media files
+public/mov/
+docs/*.mov
+docs/*.mp4
+
 # Development
 .DS_Store
 *.log
