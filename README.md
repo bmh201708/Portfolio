@@ -6,7 +6,11 @@
 
 ![首页展示](./docs/homepage.png)
 
-> 💡 **提示**：访问 [在线演示](https://jinyike.vercel.app) 体验完整效果
+## 演示视频
+
+<video src="./docs/demo.mov" width="100%" controls></video>
+
+> 📺 **B站观看**：[点击前往 Bilibili](https://www.bilibili.com/video/BV1Bq6oBREBA/)
 
 ## 设计亮点
 
