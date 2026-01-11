@@ -21,6 +21,7 @@ const projects = [
         description: "艺术与传统文化的融合",
         image: "/portfolio/MoArt Essence/cover.jpg",
         galleryImages: [
+            "/portfolio/MoArt Essence/Group 6.jpg",
             "/portfolio/MoArt Essence/cover.jpg",
             "/portfolio/MoArt Essence/Page2.jpg",
             "/portfolio/MoArt Essence/Page3.jpg",

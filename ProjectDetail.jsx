@@ -5,7 +5,7 @@ const ProjectDetail = ({ project, onBack }) => {
     if (!project) return null;
 
     return (
-        <div className="min-h-screen pt-24 pb-20 animate-fade-in-up">
+        <div className="min-h-screen pt-24 pb-20 animate-fade-in-up relative z-50">
             {/* 返回按钮 */}
             <button
                 onClick={onBack}
@@ -39,12 +39,12 @@ const ProjectDetail = ({ project, onBack }) => {
 
             {/* 作品主图 */}
             <div className="mb-16">
-                <div className="w-full aspect-[16/9] overflow-hidden relative shadow-2xl shadow-stone-200/50">
+                <div className="w-full relative shadow-2xl shadow-stone-200/50">
                     <img
                         src={project.image}
                         alt={project.title}
                         loading="eager"
-                        className="w-full h-full object-cover"
+                        className="w-full h-auto"
                     />
                 </div>
             </div>
@@ -136,15 +136,15 @@ const ProjectDetail = ({ project, onBack }) => {
                     {project.galleryImages && project.galleryImages.length > 1 && (
                         <div>
                             <h2 className="text-3xl font-serif text-stone-900 mb-6">Project Gallery</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
                                 {project.galleryImages.slice(1).map((imagePath, idx) => (
-                                    <div key={idx} className="aspect-[4/3] overflow-hidden relative group cursor-pointer">
+                                    <div key={idx} className="relative group cursor-pointer flex-shrink-0 h-[60vh] snap-center">
                                         <img
                                             src={imagePath}
                                             alt={`${project.title} - Image ${idx + 2}`}
                                             loading="lazy"
                                             decoding="async"
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            className="w-auto h-full shadow-lg"
                                         />
                                         <div className="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/5 transition-colors duration-500"></div>
                                     </div>
