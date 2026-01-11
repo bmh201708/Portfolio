@@ -39,41 +39,15 @@ const CarouselGallery = ({ images, projectTitle }) => {
                 </div>
             </div>
 
-            <div className="relative h-[70vh] w-full flex items-center justify-center overflow-hidden bg-stone-50/50 rounded-lg">
+            <div className="relative h-[70vh] w-full flex items-center justify-center overflow-hidden bg-transparent rounded-lg">
                 {images.map((image, idx) => {
-                    // Calculate relative position
-                    let offset = idx - activeIndex;
-                    // Handle wrap-around for endless effect logic if needed, 
-                    // but for simple carousel with few images, simple offset is safer visually unless we have many images.
-                    // Let's stick to simple center and limits for now, or true loop?
-                    // The requirement says "not displayed images shrink and placed on sides".
-                    // Let's try to simulate a circular buffer visually or just clamp? 
-                    // "left/right arrows switch displayed image".
-
-                    // Let's simply handle -1, 0, 1 specially.
-                    // But wait, if I have 3 images: 0, 1, 2. Active 0.
-                    // 1 is next (+1). 2 is prev (-1 effectively in loop).
-
                     const len = images.length;
-
-                    // Find shortest distance in circle
-                    // If active is 0, idx 4 (in 5 images) should be -1.
-                    // dist = (idx - active + len) % len. 
-                    // if dist > len/2, dist -= len.
-
                     let dist = (idx - activeIndex + len) % len;
                     if (dist > len / 2) dist -= len;
 
-                    // Determine styles based on distance
                     const isActive = dist === 0;
                     const isPrev = dist === -1;
                     const isNext = dist === 1;
-
-                    // We only really care about showing the immediate neighbors for the effect 
-                    // or maybe 2 steps away.
-                    // Let's set visibility based on abs(dist) <= 1 or 2?
-                    // User said "not displayed images shrink and put on sides".
-
                     const isVisible = Math.abs(dist) <= 1;
 
                     let transformClass = '';
@@ -85,25 +59,13 @@ const CarouselGallery = ({ images, projectTitle }) => {
                         zIndex = 30;
                         opacity = 1;
                     } else if (dist < 0) {
-                        // Left side
                         transformClass = 'scale-90 -translate-x-[60%] blur-[1px]';
                         zIndex = 20;
                         opacity = 0.6;
                     } else if (dist > 0) {
-                        // Right side
                         transformClass = 'scale-90 translate-x-[60%] blur-[1px]';
                         zIndex = 20;
                         opacity = 0.6;
-                    }
-
-                    // Hide distant images
-                    if (!isVisible && len > 3) {
-                        opacity = 0;
-                        zIndex = 10;
-                    } else if (!isVisible) {
-                        // If 3 or fewer images, we might want to show them?
-                        // If 2 images: 0 active. 1 is next (dist 1) which is also prev?
-                        // Handle 2 images case gracefully?
                     }
 
                     if (!isVisible) return null;
@@ -111,23 +73,31 @@ const CarouselGallery = ({ images, projectTitle }) => {
                     return (
                         <div
                             key={idx}
-                            className={`absolute transition-all duration-700 ease-in-out origin-center ${transformClass}`}
+                            className={`absolute transition-all duration-700 ease-in-out origin-center flex items-center justify-center ${transformClass}`}
                             style={{
                                 zIndex,
                                 opacity,
-                                width: '70%', // Control width to allow neighbors to be visible
-                                height: '90%'
+                                width: '70%', // Fixed width slot for consistent movement
+                                height: '100%',
+                                pointerEvents: isActive ? 'auto' : 'none', // Only active is fully interactive
                             }}
                             onClick={() => {
                                 if (isNext) nextImage();
                                 if (isPrev) prevImage();
                             }}
                         >
-                            <div className="w-full h-full relative shadow-2xl shadow-stone-200/50 bg-white">
+                            {/* Inner Card - Fits Image Exactly */}
+                            <div className={`relative inline-block transition-all duration-500 bg-white ${isActive ? 'shadow-[0_20px_50px_rgba(0,0,0,0.2)]' : 'shadow-none'}`}>
                                 <img
                                     src={image}
                                     alt={`${projectTitle} ${idx + 1}`}
-                                    className="w-full h-full object-contain mix-blend-multiply"
+                                    className="block object-contain"
+                                    style={{
+                                        maxHeight: '60vh', // Limit height to keep it within view
+                                        maxWidth: '100%',
+                                        width: 'auto',
+                                        height: 'auto'
+                                    }}
                                 />
                                 {/* Numbering overlay */}
                                 <div className={`absolute -bottom-8 left-1/2 -translate-x-1/2 font-mono text-xs transition-colors duration-300 ${isActive ? 'text-stone-900' : 'text-stone-300'}`}>
@@ -219,7 +189,7 @@ const ProjectDetail = ({ project, onBack }) => {
                             </div>
                             <div>
                                 <p className="text-stone-400 font-mono uppercase tracking-wider text-xs mb-1">Role</p>
-                                <p className="text-stone-900">Lead Designer & Developer</p>
+                                <p className="text-stone-900">{project.role || "Lead Designer & Developer"}</p>
                             </div>
                         </div>
                     </div>
@@ -238,11 +208,7 @@ const ProjectDetail = ({ project, onBack }) => {
                                     {tool}
                                 </span>
                             )) || (
-                                    <>
-                                        <span className="text-xs px-3 py-1 bg-stone-100 text-stone-600 rounded-full">Figma</span>
-                                        <span className="text-xs px-3 py-1 bg-stone-100 text-stone-600 rounded-full">React</span>
-                                        <span className="text-xs px-3 py-1 bg-stone-100 text-stone-600 rounded-full">Tailwind</span>
-                                    </>
+                                    <span className="text-xs px-3 py-1 bg-stone-100 text-stone-600 rounded-full">Figma</span>
                                 )}
                         </div>
                     </div>
