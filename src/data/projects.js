@@ -141,5 +141,60 @@ export const projects = [
             "/portfolio/Methodmate/figure5.png"
         ],
         className: "col-span-1 md:mt-32"
+    },
+    {
+        id: 5,
+        title: "Motara Cholie",
+        category: "Service Design",
+        year: "2025",
+        role: "Designer",
+        tools: ["Figma", "3ds Max"],
+        description: "Reimagining retail experiences through innovative service design and spatial planning.",
+        overview: "Motara Cholie represents a comprehensive service design project that reimagines the modern retail experience. In an era where digital commerce dominates, physical retail spaces must offer more than just transactions—they must create memorable experiences. This project explores how thoughtful spatial design, customer journey mapping, and service touchpoints can transform a traditional boutique into a destination that celebrates both products and people. Through careful analysis of user behaviors and needs, Motara Cholie creates a harmonious blend of aesthetics, functionality, and emotional connection.",
+        designProcess: [
+            {
+                title: "01. User Research & Journey Mapping",
+                description: "Conducted in-depth interviews with customers and staff to understand pain points in the shopping experience. Created detailed customer journey maps identifying key touchpoints and emotional peaks throughout the service."
+            },
+            {
+                title: "02. Spatial Strategy & Concept Development",
+                description: "Developed spatial concepts that balance circulation flow, product display, and experiential zones. Utilized 3D modeling to visualize and iterate on layout options, ensuring optimal use of space and natural customer flow patterns."
+            },
+            {
+                title: "03. Service Touchpoint Design",
+                description: "Designed comprehensive service touchpoints including wayfinding systems, digital interfaces, and physical environmental graphics. Created cohesive visual identity that extends across all customer interaction points."
+            },
+            {
+                title: "04. Prototyping & Refinement",
+                description: "Built physical mockups and digital prototypes to test service interactions. Gathered feedback through user testing sessions and refined designs to ensure seamless integration of all service elements."
+            }
+        ],
+        image: "/portfolio/MotaraCholie/0.png",
+        galleryImages: [
+            "/portfolio/MotaraCholie/cover.png",
+            "/portfolio/MotaraCholie/2.png",
+            "/portfolio/MotaraCholie/3.png",
+            "/portfolio/MotaraCholie/4.png",
+            "/portfolio/MotaraCholie/5.png",
+            "/portfolio/MotaraCholie/6.png",
+            "/portfolio/MotaraCholie/7.png",
+            "/portfolio/MotaraCholie/8.png",
+            "/portfolio/MotaraCholie/9.png",
+            "/portfolio/MotaraCholie/10.png",
+            "/portfolio/MotaraCholie/11.png",
+            "/portfolio/MotaraCholie/12.png",
+            "/portfolio/MotaraCholie/13.png",
+            "/portfolio/MotaraCholie/14.png",
+            "/portfolio/MotaraCholie/15.png",
+            "/portfolio/MotaraCholie/16.png",
+            "/portfolio/MotaraCholie/17.png",
+            "/portfolio/MotaraCholie/18.png",
+            "/portfolio/MotaraCholie/19.png",
+            "/portfolio/MotaraCholie/20.png",
+            "/portfolio/MotaraCholie/21.png",
+            "/portfolio/MotaraCholie/22.png",
+            "/portfolio/MotaraCholie/23.png"
+        ],
+        className: "col-span-1"
     }
 ];

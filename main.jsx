@@ -281,7 +281,7 @@ const WorkView = () => (
     <PageTransition className="pt-32 pb-20">
         <div className="mb-24 flex items-end justify-between border-b border-stone-200 pb-6">
             <h2 className="text-5xl md:text-7xl font-serif text-stone-900">Works</h2>
-            <span className="text-xs font-mono text-stone-400 mb-2">/ 01 — 04</span>
+            <span className="text-xs font-mono text-stone-400 mb-2">/ 01 — 05</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20 md:gap-y-40">

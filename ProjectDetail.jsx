@@ -162,7 +162,7 @@ const ProjectDetail = ({ project, onBack }) => {
             <div className="mb-16">
                 <div className="w-full relative shadow-2xl shadow-stone-200/50">
                     <img
-                        src={project.image}
+                        src={project.galleryImages?.[0] || project.image}
                         alt={project.title}
                         loading="eager"
                         className="w-full h-auto"
