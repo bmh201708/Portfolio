@@ -136,7 +136,7 @@ const ProjectDetail = ({ project, onBack }) => {
                     {project.galleryImages && project.galleryImages.length > 1 && (
                         <div>
                             <h2 className="text-3xl font-serif text-stone-900 mb-6">Project Gallery</h2>
-                            <div className="flex gap-6 overflow-x-auto pb-6 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
+                            <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
                                 {project.galleryImages.slice(1).map((imagePath, idx) => (
                                     <div key={idx} className="relative group cursor-pointer flex-shrink-0 h-[60vh] snap-center">
                                         <img

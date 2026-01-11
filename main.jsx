@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowRight, Mail, Instagram, Twitter, Github, Menu, X, ArrowUpRight, ArrowDown, ExternalLink } from 'lucide-react';
-import ProjectDetail from './ProjectDetail.jsx';
+import { projects } from './src/data/projects';
 
 // --- 静态数据和子组件移至外部，防止重复定义 ---
 
@@ -12,61 +13,7 @@ const navItems = [
     { id: 'contact', label: '联系' },
 ];
 
-const projects = [
-    {
-        id: 1,
-        title: "MoArt Essence",
-        category: "UI/UX Design",
-        year: "2025",
-        description: "艺术与传统文化的融合",
-        image: "/portfolio/MoArt Essence/cover.jpg",
-        galleryImages: [
-            "/portfolio/MoArt Essence/Group 6.jpg",
-            "/portfolio/MoArt Essence/cover.jpg",
-            "/portfolio/MoArt Essence/Page2.jpg",
-            "/portfolio/MoArt Essence/Page3.jpg",
-            "/portfolio/MoArt Essence/Page4.jpg"
-        ],
-        className: "col-span-1"
-    },
-    {
-        id: 2,
-        title: "The Unbound Journey",
-        category: "Interactive Design",
-        year: "2026",
-        description: "探索无界旅程，创造沉浸式的用户体验和叙事设计。",
-        image: "/portfolio/The Unbound Journey/main.jpg",
-        galleryImages: [
-            "/portfolio/The Unbound Journey/main.jpg"
-        ],
-        className: "col-span-1 md:mt-32"
-    },
-    {
-        id: 3,
-        title: "Braille Bloom",
-        category: "Accessibility Design",
-        year: "2024",
-        description: "为视障人士设计的盲文学习系统，让无障碍设计绽放光彩。",
-        image: "/portfolio/Braille Bloom/cover.png",
-        galleryImages: [
-            "/portfolio/Braille Bloom/cover.png",
-            "/portfolio/Braille Bloom/page2.jpg"
-        ],
-        className: "col-span-1"
-    },
-    {
-        id: 4,
-        title: "Methodmate",
-        category: "Research & Development",
-        year: "2025",
-        description: "研究方法论的数字化工具，助力学术研究的系统化管理。",
-        image: "/portfolio/Methodmate/cover.png",
-        galleryImages: [
-            "/portfolio/Methodmate/cover.png"
-        ],
-        className: "col-span-1 md:mt-32"
-    }
-];
+
 
 // 模拟的研究数据
 const publications = [
@@ -293,7 +240,7 @@ const HomeView = ({ onNavigate }) => {
     );
 };
 
-const WorkView = ({ onProjectClick }) => (
+const WorkView = () => (
     <PageTransition className="pt-32 pb-20">
         <div className="mb-24 flex items-end justify-between border-b border-stone-200 pb-6">
             <h2 className="text-5xl md:text-7xl font-serif text-stone-900">Works</h2>
@@ -302,10 +249,10 @@ const WorkView = ({ onProjectClick }) => (
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-20 md:gap-y-40">
             {projects.map((project, index) => (
-                <div
+                <Link
                     key={project.id}
-                    onClick={() => onProjectClick(project)}
-                    className={`group cursor-pointer cursor-hover ${project.className}`}
+                    to={`/portfolio/${project.id}`}
+                    className={`group cursor-pointer cursor-hover block ${project.className}`}
                 >
                     <div className="overflow-hidden relative mb-6 shadow-xl shadow-stone-200/50 aspect-[3/4]">
                         <img
@@ -335,7 +282,7 @@ const WorkView = ({ onProjectClick }) => (
                             {project.description}
                         </p>
                     </div>
-                </div>
+                </Link>
             ))}
         </div>
     </PageTransition>
@@ -562,40 +509,7 @@ const ContactView = () => (
 const Portfolio = () => {
     const [activeTab, setActiveTab] = useState('home');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [selectedProject, setSelectedProject] = useState(null);
     const [scrolled, setScrolled] = useState(false);
-
-    const cursorDotRef = useRef(null);
-    const cursorRingRef = useRef(null);
-
-    useEffect(() => {
-        const onMouseMove = (e) => {
-            if (cursorDotRef.current) {
-                cursorDotRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
-            }
-            if (cursorRingRef.current) {
-                cursorRingRef.current.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%)`;
-            }
-        };
-
-        const handleHoverCheck = (e) => {
-            if (!cursorRingRef.current) return;
-            const isHover = e.target.tagName === 'BUTTON' || e.target.tagName === 'A' || e.target.closest('.cursor-hover');
-            if (isHover) {
-                cursorRingRef.current.classList.add('cursor-active');
-            } else {
-                cursorRingRef.current.classList.remove('cursor-active');
-            }
-        };
-
-        window.addEventListener('mousemove', onMouseMove);
-        window.addEventListener('mouseover', handleHoverCheck);
-
-        return () => {
-            window.removeEventListener('mousemove', onMouseMove);
-            window.removeEventListener('mouseover', handleHoverCheck);
-        };
-    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -606,20 +520,7 @@ const Portfolio = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-[#FDFBF7] text-stone-900 font-sans overflow-x-hidden transition-colors duration-700 cursor-none">
-
-            {/* 自定义光标 */}
-            <div
-                ref={cursorRingRef}
-                className="fixed w-8 h-8 border border-stone-800 rounded-full pointer-events-none z-[100] hidden md:block mix-blend-difference transition-all duration-300 ease-out origin-center top-0 left-0 -translate-x-1/2 -translate-y-1/2"
-            ></div>
-            <div
-                ref={cursorDotRef}
-                className="fixed w-1 h-1 bg-stone-800 rounded-full pointer-events-none z-[100] hidden md:block mix-blend-difference top-0 left-0 -translate-x-1/2 -translate-y-1/2"
-            ></div>
-
-            {/* 噪点纹理叠加 */}
-            <div className="fixed inset-0 pointer-events-none opacity-[0.04] z-50 mix-blend-multiply" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
+        <>
 
             {/* 顶部导航 */}
             <header className={`fixed top-0 left-0 right-0 z-40 px-6 py-8 md:px-16 flex justify-between items-center transition-all duration-500 ${scrolled ? 'bg-[#FDFBF7]/90 backdrop-blur-sm py-4 border-b border-stone-100' : ''}`}>
@@ -674,20 +575,11 @@ const Portfolio = () => {
             {/* 主要内容区域 */}
             <main className="px-6 md:px-16 md:ml-24 md:mr-24 min-h-screen relative">
                 <div className="max-w-7xl mx-auto">
-                    {selectedProject ? (
-                        <ProjectDetail
-                            project={selectedProject}
-                            onBack={() => setSelectedProject(null)}
-                        />
-                    ) : (
-                        <>
-                            {activeTab === 'home' && <HomeView onNavigate={setActiveTab} />}
-                            {activeTab === 'work' && <WorkView onProjectClick={setSelectedProject} />}
-                            {activeTab === 'research' && <ResearchView />}
-                            {activeTab === 'about' && <AboutView />}
-                            {activeTab === 'contact' && <ContactView />}
-                        </>
-                    )}
+                    {activeTab === 'home' && <HomeView onNavigate={setActiveTab} />}
+                    {activeTab === 'work' && <WorkView />}
+                    {activeTab === 'research' && <ResearchView />}
+                    {activeTab === 'about' && <AboutView />}
+                    {activeTab === 'contact' && <ContactView />}
                 </div>
             </main>
 
@@ -795,7 +687,7 @@ const Portfolio = () => {
           to { transform: rotate(360deg); }
         }
       `}</style>
-        </div>
+        </>
     );
 };
 
