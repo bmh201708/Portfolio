@@ -182,7 +182,7 @@ const HomeView = ({ onNavigate }) => {
                     <div className="md:sticky md:top-32">
                         <h2 className="text-4xl md:text-6xl font-serif leading-tight text-stone-900">
                             The art of <br />
-                            <span className="italic text-stone-400">subtraction</span>.
+                            <span className="italic text-stone-400">digital design</span>.
                         </h2>
                         <div className="mt-8 w-16 h-16 rounded-full border border-stone-300 flex items-center justify-center animate-spin-slow opacity-50">
                             <ArrowDown className="w-6 h-6 text-stone-400" />
@@ -191,7 +191,7 @@ const HomeView = ({ onNavigate }) => {
 
                     <div className="space-y-12 group cursor-hover pt-4">
                         <p className="text-xl md:text-2xl font-light text-stone-600 leading-relaxed">
-                            在嘈杂的数字时代，沉默是一种奢侈。我们不仅是在设计界面，更是在设计“留白”。
+                            在嘈杂的数字时代，审美是一种奢侈。我们不仅是在设计界面，更是在设计“数字的肌理”。
                         </p>
                         <p className="text-stone-500 leading-relaxed">
                             每一个像素的省略，都是为了让核心信息更清晰地呼吸。我不追求繁复的装饰，而是追求结构本身的韵律感。
@@ -207,7 +207,7 @@ const HomeView = ({ onNavigate }) => {
                     <div className="space-y-6 group cursor-hover order-2 md:order-1">
                         <h3 className="font-mono text-xs uppercase tracking-widest text-stone-400 mb-4 border-l-2 border-stone-900 pl-4">The Process</h3>
                         <p className="text-3xl md:text-4xl font-serif text-stone-800 leading-tight">
-                            构建情感的容器
+                            当艺术与技术相遇
                         </p>
                         <p className="text-stone-500 leading-relaxed text-lg font-light">
                             真实的连接发生在我们放下装饰、直面本质的时刻。通过代码与设计的共生，我们构建的不仅仅是工具。
@@ -222,7 +222,7 @@ const HomeView = ({ onNavigate }) => {
                             <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=600" loading="lazy" decoding="async" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 1" />
                         </div>
                         <div className="aspect-[3/4] bg-stone-300 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1507643179173-442f01fc12a9?auto=format&fit=crop&q=80&w=600" loading="lazy" decoding="async" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 2" />
+                            <img src="./image/1.jpeg" loading="lazy" decoding="async" className="w-full h-full object-cover mix-blend-multiply opacity-80" alt="Texture 2" />
                         </div>
                     </div>
                 </div>
