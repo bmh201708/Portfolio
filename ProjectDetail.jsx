@@ -1,5 +1,156 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, ExternalLink, Calendar, Tag } from 'lucide-react';
+
+const CarouselGallery = ({ images, projectTitle }) => {
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    const nextImage = () => {
+        setActiveIndex((prev) => (prev + 1) % images.length);
+    };
+
+    const prevImage = () => {
+        setActiveIndex((prev) => (prev - 1 + images.length) % images.length);
+    };
+
+    return (
+        <div className="mb-16">
+            <div className="flex items-end justify-between mb-8 border-b border-stone-200 pb-4">
+                <h2 className="text-3xl font-serif text-stone-900">Project Gallery</h2>
+                <div className="flex items-center gap-6">
+                    <div className="flex gap-2">
+                        <button
+                            onClick={prevImage}
+                            className="p-2 rounded-full border border-stone-200 hover:bg-stone-100 hover:border-stone-300 transition-all cursor-hover group"
+                            aria-label="Previous Image"
+                        >
+                            <ArrowLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-900 transition-colors" />
+                        </button>
+                        <button
+                            onClick={nextImage}
+                            className="p-2 rounded-full border border-stone-200 hover:bg-stone-100 hover:border-stone-300 transition-all cursor-hover group"
+                            aria-label="Next Image"
+                        >
+                            <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-stone-900 transition-colors" />
+                        </button>
+                    </div>
+                    <span className="font-mono text-xs text-stone-400">
+                        {images.length} IMAGES
+                    </span>
+                </div>
+            </div>
+
+            <div className="relative h-[70vh] w-full flex items-center justify-center overflow-hidden bg-stone-50/50 rounded-lg">
+                {images.map((image, idx) => {
+                    // Calculate relative position
+                    let offset = idx - activeIndex;
+                    // Handle wrap-around for endless effect logic if needed, 
+                    // but for simple carousel with few images, simple offset is safer visually unless we have many images.
+                    // Let's stick to simple center and limits for now, or true loop?
+                    // The requirement says "not displayed images shrink and placed on sides".
+                    // Let's try to simulate a circular buffer visually or just clamp? 
+                    // "left/right arrows switch displayed image".
+
+                    // Let's simply handle -1, 0, 1 specially.
+                    // But wait, if I have 3 images: 0, 1, 2. Active 0.
+                    // 1 is next (+1). 2 is prev (-1 effectively in loop).
+
+                    const len = images.length;
+
+                    // Find shortest distance in circle
+                    // If active is 0, idx 4 (in 5 images) should be -1.
+                    // dist = (idx - active + len) % len. 
+                    // if dist > len/2, dist -= len.
+
+                    let dist = (idx - activeIndex + len) % len;
+                    if (dist > len / 2) dist -= len;
+
+                    // Determine styles based on distance
+                    const isActive = dist === 0;
+                    const isPrev = dist === -1;
+                    const isNext = dist === 1;
+
+                    // We only really care about showing the immediate neighbors for the effect 
+                    // or maybe 2 steps away.
+                    // Let's set visibility based on abs(dist) <= 1 or 2?
+                    // User said "not displayed images shrink and put on sides".
+
+                    const isVisible = Math.abs(dist) <= 1;
+
+                    let transformClass = '';
+                    let zIndex = 0;
+                    let opacity = 0;
+
+                    if (isActive) {
+                        transformClass = 'scale-100 translate-x-0';
+                        zIndex = 30;
+                        opacity = 1;
+                    } else if (dist < 0) {
+                        // Left side
+                        transformClass = 'scale-90 -translate-x-[60%] blur-[1px]';
+                        zIndex = 20;
+                        opacity = 0.6;
+                    } else if (dist > 0) {
+                        // Right side
+                        transformClass = 'scale-90 translate-x-[60%] blur-[1px]';
+                        zIndex = 20;
+                        opacity = 0.6;
+                    }
+
+                    // Hide distant images
+                    if (!isVisible && len > 3) {
+                        opacity = 0;
+                        zIndex = 10;
+                    } else if (!isVisible) {
+                        // If 3 or fewer images, we might want to show them?
+                        // If 2 images: 0 active. 1 is next (dist 1) which is also prev?
+                        // Handle 2 images case gracefully?
+                    }
+
+                    if (!isVisible) return null;
+
+                    return (
+                        <div
+                            key={idx}
+                            className={`absolute transition-all duration-700 ease-in-out origin-center ${transformClass}`}
+                            style={{
+                                zIndex,
+                                opacity,
+                                width: '70%', // Control width to allow neighbors to be visible
+                                height: '90%'
+                            }}
+                            onClick={() => {
+                                if (isNext) nextImage();
+                                if (isPrev) prevImage();
+                            }}
+                        >
+                            <div className="w-full h-full relative shadow-2xl shadow-stone-200/50 bg-white">
+                                <img
+                                    src={image}
+                                    alt={`${projectTitle} ${idx + 1}`}
+                                    className="w-full h-full object-contain mix-blend-multiply"
+                                />
+                                {/* Numbering overlay */}
+                                <div className={`absolute -bottom-8 left-1/2 -translate-x-1/2 font-mono text-xs transition-colors duration-300 ${isActive ? 'text-stone-900' : 'text-stone-300'}`}>
+                                    {(idx + 1).toString().padStart(2, '0')}
+                                </div>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
+            {/* Minimal Indicators */}
+            <div className="flex justify-center gap-2 mt-8">
+                {images.map((_, idx) => (
+                    <button
+                        key={idx}
+                        onClick={() => setActiveIndex(idx)}
+                        className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${idx === activeIndex ? 'bg-stone-800 w-4' : 'bg-stone-300 hover:bg-stone-400'}`}
+                    />
+                ))}
+            </div>
+        </div>
+    );
+};
 
 const ProjectDetail = ({ project, onBack }) => {
     if (!project) return null;
@@ -118,100 +269,57 @@ const ProjectDetail = ({ project, onBack }) => {
                         <h2 className="text-3xl font-serif text-stone-900 mb-6">Project Overview</h2>
                         <div className="prose prose-stone max-w-none text-stone-600 leading-relaxed space-y-4">
                             <p>
-                                {project.detailedDescription ||
+                                {project.overview || project.detailedDescription ||
                                     `This project represents a deep exploration of ${project.category.toLowerCase()}, 
                                 where form meets function in the most elegant way possible. Through careful consideration 
                                 of user needs and aesthetic principles, we created an experience that resonates with users 
                                 on both practical and emotional levels.`}
                             </p>
-                            <p>
-                                The design process involved extensive research, prototyping, and iteration to ensure
-                                every detail contributes to the overall vision. Each element was carefully crafted
-                                to create a cohesive and meaningful user experience.
-                            </p>
+                            {!project.overview && (
+                                <p>
+                                    The design process involved extensive research, prototyping, and iteration to ensure
+                                    every detail contributes to the overall vision. Each element was carefully crafted
+                                    to create a cohesive and meaningful user experience.
+                                </p>
+                            )}
                         </div>
                     </div>
 
-                    {/* 图片画廊 - 显示所有作品图片 */}
-                    {project.galleryImages && project.galleryImages.length > 1 && (
-                        <div>
-                            <div className="flex items-end justify-between mb-8 border-b border-stone-200 pb-4">
-                                <h2 className="text-3xl font-serif text-stone-900">Project Gallery</h2>
-                                <div className="flex items-center gap-6">
-                                    <div className="flex gap-2">
-                                        <button
-                                            onClick={() => {
-                                                const container = document.getElementById('gallery-container');
-                                                container.scrollBy({ left: -window.innerWidth * 0.6, behavior: 'smooth' });
-                                            }}
-                                            className="p-2 rounded-full border border-stone-200 hover:bg-stone-100 hover:border-stone-300 transition-all cursor-hover group"
-                                            aria-label="Scroll Left"
-                                        >
-                                            <ArrowLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-900 transition-colors" />
-                                        </button>
-                                        <button
-                                            onClick={() => {
-                                                const container = document.getElementById('gallery-container');
-                                                container.scrollBy({ left: window.innerWidth * 0.6, behavior: 'smooth' });
-                                            }}
-                                            className="p-2 rounded-full border border-stone-200 hover:bg-stone-100 hover:border-stone-300 transition-all cursor-hover group"
-                                            aria-label="Scroll Right"
-                                        >
-                                            <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-stone-900 transition-colors" />
-                                        </button>
-                                    </div>
-                                    <span className="font-mono text-xs text-stone-400">
-                                        {project.galleryImages.length - 1} IMAGES
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div id="gallery-container" className="flex gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0 scroll-smooth">
-                                {project.galleryImages.slice(1).map((imagePath, idx) => (
-                                    <div key={idx} className="relative group cursor-pointer flex-shrink-0 h-[60vh] snap-center">
-                                        {/* Image Container */}
-                                        <div className="h-full relative overflow-hidden bg-stone-100 shadow-sm transition-all duration-500 group-hover:shadow-xl">
-                                            <img
-                                                src={imagePath}
-                                                alt={`${project.title} - ${idx + 1}`}
-                                                loading="lazy"
-                                                decoding="async"
-                                                className="w-auto h-full object-contain mix-blend-multiply opacity-90 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
-                                            />
-
-                                            {/* Hover Overlay */}
-                                            <div className="absolute inset-0 bg-stone-900/0 transition-colors duration-500 group-hover:bg-stone-900/5"></div>
-                                        </div>
-
-                                        {/* Number Indicator */}
-                                        <div className="absolute -bottom-6 left-0 font-mono text-[10px] text-stone-300 transition-colors duration-300 group-hover:text-stone-900">
-                                            {(idx + 1).toString().padStart(2, '0')}
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                    {/* 图片画廊 Carousel Implementation */}
+                    {project.galleryImages && project.galleryImages.length > 0 && (
+                        <CarouselGallery images={project.galleryImages} projectTitle={project.title} />
                     )}
 
                     <div>
                         <h2 className="text-3xl font-serif text-stone-900 mb-6">Design Process</h2>
                         <div className="space-y-6 text-stone-600 leading-relaxed">
-                            <div>
-                                <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 mb-2">01. Research & Discovery</h3>
-                                <p>Understanding user needs and defining the core problems to solve.</p>
-                            </div>
-                            <div>
-                                <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 mb-2">02. Ideation & Prototyping</h3>
-                                <p>Exploring various design directions and creating interactive prototypes.</p>
-                            </div>
-                            <div>
-                                <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 mb-2">03. Design & Development</h3>
-                                <p>Refining the visual design and implementing the solution with clean code.</p>
-                            </div>
-                            <div>
-                                <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 mb-2">04. Testing & Iteration</h3>
-                                <p>Gathering feedback and continuously improving the experience.</p>
-                            </div>
+                            {project.designProcess ? (
+                                project.designProcess.map((process, index) => (
+                                    <div key={index}>
+                                        <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 mb-2">{process.title}</h3>
+                                        <p>{process.description}</p>
+                                    </div>
+                                ))
+                            ) : (
+                                <>
+                                    <div>
+                                        <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 mb-2">01. Research & Discovery</h3>
+                                        <p>Understanding user needs and defining the core problems to solve.</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 mb-2">02. Ideation & Prototyping</h3>
+                                        <p>Exploring various design directions and creating interactive prototypes.</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 mb-2">03. Design & Development</h3>
+                                        <p>Refining the visual design and implementing the solution with clean code.</p>
+                                    </div>
+                                    <div>
+                                        <h3 className="font-mono text-xs uppercase tracking-widest text-stone-900 mb-2">04. Testing & Iteration</h3>
+                                        <p>Gathering feedback and continuously improving the experience.</p>
+                                    </div>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>
