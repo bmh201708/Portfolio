@@ -1,11 +1,11 @@
 import React from 'react';
-import { ArrowLeft, ExternalLink, Calendar, Tag } from 'lucide-react';
+import { ArrowLeft, ArrowRight, ExternalLink, Calendar, Tag } from 'lucide-react';
 
 const ProjectDetail = ({ project, onBack }) => {
     if (!project) return null;
 
     return (
-        <div className="min-h-screen pt-24 pb-20 animate-fade-in-up relative z-50">
+        <div className="min-h-screen pt-24 pb-20 px-6 md:px-16 animate-fade-in-up relative z-50">
             {/* 返回按钮 */}
             <button
                 onClick={onBack}
@@ -135,18 +135,58 @@ const ProjectDetail = ({ project, onBack }) => {
                     {/* 图片画廊 - 显示所有作品图片 */}
                     {project.galleryImages && project.galleryImages.length > 1 && (
                         <div>
-                            <h2 className="text-3xl font-serif text-stone-900 mb-6">Project Gallery</h2>
-                            <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0">
+                            <div className="flex items-end justify-between mb-8 border-b border-stone-200 pb-4">
+                                <h2 className="text-3xl font-serif text-stone-900">Project Gallery</h2>
+                                <div className="flex items-center gap-6">
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => {
+                                                const container = document.getElementById('gallery-container');
+                                                container.scrollBy({ left: -window.innerWidth * 0.6, behavior: 'smooth' });
+                                            }}
+                                            className="p-2 rounded-full border border-stone-200 hover:bg-stone-100 hover:border-stone-300 transition-all cursor-hover group"
+                                            aria-label="Scroll Left"
+                                        >
+                                            <ArrowLeft className="w-4 h-4 text-stone-400 group-hover:text-stone-900 transition-colors" />
+                                        </button>
+                                        <button
+                                            onClick={() => {
+                                                const container = document.getElementById('gallery-container');
+                                                container.scrollBy({ left: window.innerWidth * 0.6, behavior: 'smooth' });
+                                            }}
+                                            className="p-2 rounded-full border border-stone-200 hover:bg-stone-100 hover:border-stone-300 transition-all cursor-hover group"
+                                            aria-label="Scroll Right"
+                                        >
+                                            <ArrowRight className="w-4 h-4 text-stone-400 group-hover:text-stone-900 transition-colors" />
+                                        </button>
+                                    </div>
+                                    <span className="font-mono text-xs text-stone-400">
+                                        {project.galleryImages.length - 1} IMAGES
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div id="gallery-container" className="flex gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-hide -mx-6 px-6 md:mx-0 md:px-0 scroll-smooth">
                                 {project.galleryImages.slice(1).map((imagePath, idx) => (
                                     <div key={idx} className="relative group cursor-pointer flex-shrink-0 h-[60vh] snap-center">
-                                        <img
-                                            src={imagePath}
-                                            alt={`${project.title} - Image ${idx + 2}`}
-                                            loading="lazy"
-                                            decoding="async"
-                                            className="w-auto h-full shadow-lg"
-                                        />
-                                        <div className="absolute inset-0 bg-stone-900/0 group-hover:bg-stone-900/5 transition-colors duration-500"></div>
+                                        {/* Image Container */}
+                                        <div className="h-full relative overflow-hidden bg-stone-100 shadow-sm transition-all duration-500 group-hover:shadow-xl">
+                                            <img
+                                                src={imagePath}
+                                                alt={`${project.title} - ${idx + 1}`}
+                                                loading="lazy"
+                                                decoding="async"
+                                                className="w-auto h-full object-contain mix-blend-multiply opacity-90 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100"
+                                            />
+
+                                            {/* Hover Overlay */}
+                                            <div className="absolute inset-0 bg-stone-900/0 transition-colors duration-500 group-hover:bg-stone-900/5"></div>
+                                        </div>
+
+                                        {/* Number Indicator */}
+                                        <div className="absolute -bottom-6 left-0 font-mono text-[10px] text-stone-300 transition-colors duration-300 group-hover:text-stone-900">
+                                            {(idx + 1).toString().padStart(2, '0')}
+                                        </div>
                                     </div>
                                 ))}
                             </div>

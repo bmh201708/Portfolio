@@ -18,13 +18,16 @@ export const projects = [
     },
     {
         id: 2,
-        title: "The Unbound Journey",
+        title: "Vista: The Unbound Journey",
         category: "Interactive Design",
         year: "2026",
         description: "探索无界旅程，创造沉浸式的用户体验和叙事设计。",
         image: "/portfolio/The Unbound Journey/main.jpg",
         galleryImages: [
-            "/portfolio/The Unbound Journey/main.jpg"
+            "/portfolio/Vista: The Unbound Journey/main.jpg",
+            "/portfolio/The Unbound Journey/1.jpg",
+            "/portfolio/The Unbound Journey/2.png",
+            "/portfolio/The Unbound Journey/3.jpg"
         ],
         className: "col-span-1 md:mt-32"
     },
